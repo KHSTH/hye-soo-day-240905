@@ -1,0 +1,250 @@
+@font-face {
+    font-family: 'SingleDay-Regular';
+    src: url('../assets/fonts/SingleDay-Regular.eot');
+    src: url('../assets/fonts/SingleDay-Regular.woff2') format('woff2'),
+         url('../assets/fonts/SingleDay-Regular.woff') format('woff'),
+         url('../assets/fonts/SingleDay-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Itim-Regular';
+    src: url('../assets/fonts/Itim-Regular.eot');
+    src: url('../assets/fonts/Itim-Regular.woff2') format('woff2'),
+         url('../assets/fonts/Itim-Regular.woff') format('woff'),
+         url('../assets/fonts/Itim-Regular.ttf') format('truetype'),
+         url('../assets/fonts/Itim-Regular.otf') format('opentype');
+    font-style: normal;
+}
+
+body {
+    background-image: url('../assets/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: 'SingleDay-Regular', sans-serif;
+}
+
+@supports (font-family: 'Itim-Regular') {
+    body {
+        font-family: 'Itim-Regular', 'SingleDay-Regular', sans-serif;
+    }
+}
+
+.header-container {
+    text-align: center;
+    margin-top: 43px;
+    margin-bottom: 0px;
+    width: 100%; 
+    height: auto; 
+}
+
+.header-image {
+    width: 100%; 
+    height: auto;
+    max-width: none;
+    border-radius: 0; 
+}
+
+.message-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center; /* จัดให้กล่องข้อความอยู่กลาง container */
+}
+
+.message {
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+    background-color: #685454;
+    border: 0px solid #F2F2F2;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(196, 185, 185, 0.962);
+    word-wrap: break-word;
+    margin: 20px auto; /* จัดกล่องข้อความให้อยู่กลาง */
+    min-width: 150px;
+    max-width: calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+.message img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.message p strong {
+    color: #EA8A8A;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.message p {
+    color: #F2F2F2;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.message .timestamp {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    color: #EBD5D5;
+}
+
+@media (max-width: 768px) {
+    .message {
+        flex: 1 1 100%; 
+    }
+}
+
+.footer-button {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #EA8A8A;
+    color: #ffffff;
+    border: none;
+    padding: 8px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.footer-button:hover {
+    background-color: #e27777;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-image: url('../assets/images/background-small.png');
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    body {
+        background-image: url('../assets/images/background-medium.png');
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1920px) {
+    body {
+        background-image: url('../assets/images/background-large.png');
+    }
+}
+
+@media (min-width: 1921px) {
+    body {
+        background-image: url('../assets/images/background.png');
+    }
+}
+
+@media (max-width: 768px) {
+    .message-container {
+        flex-direction: column; /* ทำให้ข้อความเรียงลงในแนวตั้ง */
+        padding: 10px; /* ปรับขนาด padding ให้เหมาะสม */
+        align-items: center; /* จัดแนวข้อความไปที่กลาง */
+    }
+
+    .message {
+        flex: 1 1 auto; /* ให้กล่องข้อความปรับขนาดตามความกว้างที่มี */
+        width: 80%; /* ใช้ความกว้าง 90% ของ container */
+        max-width: 500px; /* จำกัดความกว้างสูงสุดของกล่องข้อความ */
+        margin-bottom: 10px; /* ปรับ margin ให้เหมาะสม */
+        box-sizing: border-box; /* รวม padding และ border ในการคำนวณขนาด */
+    }
+
+    body {
+        background-image: url('../assets/images/background-small.png');
+    }
+}
+/* เปลี่ยนสีฟอนต์สำหรับฟอร์มในหน้า submit.html */
+form h2 {
+    color: #EBD5D5; /* เปลี่ยนสีฟอนต์ของ h2 */
+    font-size: 1.6em;
+}
+
+form input, form textarea {
+    color: #EA8A8A; /* เปลี่ยนสีฟอนต์ของ input และ textarea */
+}
+
+form small {
+    color: #EBD5D5; /* เปลี่ยนสีฟอนต์ของ small */
+}
+/* Styles สำหรับฟอร์มในหน้า submit.html */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    max-width: 500px;
+    padding: 30px;
+    background-color: #685454;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Itim-Regular', sans-serif; /* ใช้ฟอนต์เดียวกันกับหน้า index.html */
+}
+
+input, textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Itim-Regular', sans-serif; /* ใช้ฟอนต์เดียวกันกับหน้า index.html */
+    font-size: 16px; /* ขนาดฟอนต์ที่ต้องการ */
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    background-color: #EA8A8A;
+    color: white;
+    margin-top: 15px;
+    font-family: 'Itim-Regular', sans-serif; /* ใช้ฟอนต์เดียวกันกับหน้า index.html */
+}
+
+button:hover {
+    background-color: #e27777;
+}
+
+a button {
+    background-color: #c0c0c0;
+}
+
+a button:hover {
+    background-color: #a0a0a0;
+}

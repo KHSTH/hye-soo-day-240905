@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hye Soo's Birthday♥</title>
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/images/favicon48x48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon180x180.png">
+    
+    <!-- Firebase App (Core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <!-- Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
+    <!-- Firebase Storage -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+</head>
+
+<body>
+  <div class="form-container">
+      <form id="messageForm">
+          <h2>♥ To Hye Soo Kim ♥</h2>
+          <input type="text" id="name" placeholder="ชื่อแสนไพเราะ (Your Name)" required>
+          <textarea id="message" placeholder="บรรยายความรักมาได้เลย (Your Message)" required></textarea>
+          <input type="file" id="imageUpload" accept="image/*">
+          <small>อัปโหลดภาพได้ไม่เกิน 2 MB (Upload images up to 2 MB)</small>
+          <span id="fileSizeError" style="color: red;"></span>
+          <button type="submit">กดส่งฟามรัก ♥ send your love</button>
+      </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+    import { getDatabase, ref, push, set } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWqGX8sW1M5fA5HA9rIfvAP4j8jkFUnbI",
+      authDomain: "bd-messages.firebaseapp.com",
+      databaseURL: "https://bd-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "bd-messages",
+      storageBucket: "bd-messages.appspot.com",
+      messagingSenderId: "801818692598",
+      appId: "1:801818692598:web:340f91e0dca55d05cad5d7",
+      measurementId: "G-5YXWYT5L9F"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+
+    document.getElementById('messageForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent page refresh
+
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+      const imageFile = document.getElementById('imageUpload').files[0];
+      const fileSizeError = document.getElementById('fileSizeError'); // Get the file size error element
+
+      // Clear any previous error message
+      fileSizeError.textContent = '';
+
+      // Check if name and message are provided
+      if (name.trim() && message.trim()) {
+        // Check file size if an image is provided
+        if (imageFile && imageFile.size > 2 * 1024 * 1024) { // 2 MB
+          fileSizeError.textContent = 'File size exceeds 2 MB. Please choose a smaller file.';
+          return; // Exit function if file size exceeds limit
+        }
+
+        saveMessage(name, message, imageFile);
+        document.getElementById('messageForm').reset();
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000); // Redirect after 1 second
+      } else {
+        fileSizeError.textContent = 'Please provide both a name and a message.';
+      }
+    });
+
+    function saveMessage(name, message, imageFile) {
+      const messagesRef = ref(database, 'messages');
+      const newMessageRef = push(messagesRef);
+
+      if (imageFile) {
+        const storagePath = 'images/' + imageFile.name;
+        const imageRef = storageRef(storage, storagePath);
+        uploadBytes(imageRef, imageFile).then((snapshot) => {
+          return getDownloadURL(snapshot.ref);
+        }).then((downloadURL) => {
+          set(newMessageRef, {
+            name: name,
+            message: message,
+            imageUrl: downloadURL,
+            timestamp: new Date().toISOString()
+          });
+        }).catch((error) => {
+          console.error("Error uploading file:", error);
+        });
+      } else {
+        set(newMessageRef, {
+          name: name,
+          message: message,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+  </script>
+</body>
+</html>

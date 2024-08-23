@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- ภาษาอังกฤษ -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hye Soo's Birthday♥</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/images/favicon48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon180x180.png">
+</head>
+<body>
+  <!-- ส่วนสำหรับรูป Head -->
+  <header class="header-container">
+    <img src="assets/images/head.png" alt="Head Image" class="header-image">
+  </header>
+  
+  <div class="message-container" id="messages">
+    <!-- Messages will be loaded here -->
+  </div>
+  <a href="submit.html" class="footer-button">+ ปุ่มส่งความรัก♥</a>
+
+  <!-- Firebase App (Core) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+  <!-- Firebase Database -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
+  <!-- Firebase Storage -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+  <!-- Your script -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+    import { getDatabase, ref, onChildAdded } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+    import { getStorage, ref as storageRef, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWqGX8sW1M5fA5HA9rIfvAP4j8jkFUnbI",
+      authDomain: "bd-messages.firebaseapp.com",
+      databaseURL: "https://bd-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "bd-messages",
+      storageBucket: "bd-messages.appspot.com",
+      messagingSenderId: "801818692598",
+      appId: "1:801818692598:web:340f91e0dca55d05cad5d7",
+      measurementId: "G-5YXWYT5L9F"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const messagesRef = ref(database, 'messages');
+      onChildAdded(messagesRef, function(snapshot) {
+        const message = snapshot.val();
+        if (message) {
+          const messageElement = document.createElement('div');
+          messageElement.className = 'message';
+          messageElement.innerHTML = `
+            <p><strong>${message.name}</strong>: <br>${message.message.replace(/\n/g, '<br>')}</p>
+            ${message.imageUrl ? `<img src="${message.imageUrl}" alt="Uploaded Image">` : ''}
+            <div class="timestamp">${new Date(message.timestamp).toLocaleString()}</div>
+          `;
+          document.getElementById('messages').appendChild(messageElement);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
