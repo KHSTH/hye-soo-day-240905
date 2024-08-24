@@ -67,7 +67,7 @@ body {
     background-color: #685454;
     border: 0px solid #F2F2F2;
     border-radius: 20px;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 4px 8px rgba(151, 126, 126, 0.915);
     word-wrap: break-word;
     margin: 20px auto; /* จัดกล่องข้อความให้อยู่กลาง */
@@ -94,20 +94,21 @@ body {
     color: #EA8A8A;
     font-size: 18px;
     display: block;
+    margin-top: -20px;
     margin-bottom: 10px;
 }
 
 .message p {
     color: #F2F2F2;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
 .message .timestamp {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 20px;
     font-size: 10px;
     color: #EBD5D5;
 }
@@ -120,7 +121,7 @@ body {
 
 .footer-button {
     position: fixed;
-    bottom: 40px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #EA8A8A;
