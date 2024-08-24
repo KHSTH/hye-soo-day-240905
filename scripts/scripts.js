@@ -10,12 +10,11 @@ const firebaseConfig = {
     measurementId: "G-5YXWYT5L9F"
 };
 
-// Import Firebase libraries
+// Initialize Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
 import { getDatabase, ref, onValue, update, push, set } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const storage = getStorage(app);
@@ -100,23 +99,23 @@ async function saveMessage(name, message, imageFile) {
         name: name,
         message: message,
         timestamp: Date.now(),
-        imageUrl: image // Store the image URL if an image was uploaded
+        imageUrl: imageUrl // Corrected from image to imageUrl
     });
 }
 
 // Load messages from Firebase
 document.addEventListener('DOMContentLoaded', function() {
-    // ฟังก์ชันการจัดการฟอนต์ภาษาไทย
+    // Function to apply font to Thai text
     function applyFontToThaiText() {
-        const elements = document.querySelectorAll('p, span, div'); // เลือกแท็กที่ต้องการ
+        const elements = document.querySelectorAll('p, span, div'); // Select tags you want
         elements.forEach(element => {
-            if (element.innerText.match(/[\u0E00-\u0E7F]/)) { // ตรวจสอบหาคำภาษาไทย
+            if (element.innerText.match(/[\u0E00-\u0E7F]/)) { // Check for Thai text
                 element.classList.add('lang-th');
             }
         });
     }
 
-    applyFontToThaiText(); // เรียกใช้งานฟังก์ชัน
+    applyFontToThaiText(); // Call function
 
     // Load messages from Firebase
     const messagesRef = ref(database, 'messages');
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('messages').appendChild(messageElement);
         });
         scrollToBottom(); // Scroll to the bottom after adding new messages
-        applyFontToThaiText(); // เรียกใช้งานฟังก์ชันหลังจากเพิ่มข้อความใหม่
+        applyFontToThaiText(); // Apply font after adding new messages
     });
 
     // Function to scroll to the bottom of the messages container
